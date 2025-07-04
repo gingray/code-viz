@@ -1,51 +1,63 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Vite App</title>
-  </head>
-  <body>
-  <header>
+</head>
+<body x-data>
+<header>
     <nav>
-      <button class="circle transparent">
-        <i>menu</i>
-      </button>
-      <h1 class="max center-align">Code-viz tool</h1>
-      <button class="circle transparent">
-        <img class="responsive" src="/favicon.png">
-      </button>
+        <button class="circle transparent">
+            <i>menu</i>
+        </button>
+        <h1 class="max center-align">Code-viz tool</h1>
+        <button class="circle transparent">
+            <img class="responsive" src="/favicon.png">
+        </button>
     </nav>
-  </header>
-  <article class="border medium no-padding">
-    <main class="responsive">
-      <div id="graph"></div>
-      <form id="nodeEditForm">
-        <div class="field label border small">
-          <input type="text" id="nodeId" name="nodeId" readonly>
-          <label for="nodeId">Node ID:</label>
+</header>
+<main class="responsive max">
+    <div class="grid">
+        <div class="s3">
+            <ul class="list border">
+                <template x-for="node in $store.graph.nodes" :key="node.name">
+                    <li x-text="node.name" x-on:click="$store.graph.selectNode(node.name)"></li>
+                </template>
+            </ul>
         </div>
-        <div class="field textarea border">
-          <label for="nodeName">Description:</label>
-          <textarea id="nodeName" name="nodeName"></textarea>
-        </div>
-        <div class="field border">
-          <label for="nodeNameIn">In Node:</label>
-          <input type="text" id="nodeNameIn" name="nodeNameIn">
-        </div>
-        <div class="field border">
-          <label for="nodeNameOut">Out Node:</label>
-          <input type="text" id="nodeNameOut" name="nodeNameOut">
-        </div>
+        <div class="s6">
+            <div id="graph"></div>
+            <form id="nodeEditForm">
 
-        <div class="form-buttons">
-          <button type="submit" class="btn-primary">Add Node</button>
+                <div class="field label border small">
+                    <input type="text" id="nodeId" name="nodeId" x-model="$store.graph.nodeName">
+                    <label for="nodeId">Node ID:</label>
+                </div>
+
+
+                <div class="field textarea border">
+                    <label for="nodeName">Description:</label>
+                    <textarea id="nodeName" name="nodeName"></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="max">
+                        <div class="field border label max">
+                            <input type="text" id="nodeConnectTo" name="nodeConnectTo" x-model="$store.graph.connectToSelected">
+                            <label for="nodeConnectTo">Connect To:</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <button @click.prevent="$store.graph.addNode()" class="btn-primary">Add Node</button>
+                </div>
+            </form>
         </div>
-      </form>
-    </main>
-  </article>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+    </div>
+</main>
+<script type="module" src="/src/main.js"></script>
+</body>
 </html>

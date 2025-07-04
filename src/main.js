@@ -1,32 +1,19 @@
 import "beercss";
 import './style.css'
+import * as d3 from "d3";
+import {store} from "./store";
+import Alpine from 'alpinejs'
 
-const app = () => {
-    console.log('Hello World!')
+const app = (store) => {
+    const nodes = Object.keys(store).map(key => {
+        return {id: key, name: key, size: 20 };
+    })
     // Graph data - nodes and links
-    const nodes = [
-        { id: "A", group: 1, size: 20, name: "Node A" },
-        { id: "B", group: 1, size: 15, name: "Node B" },
-        { id: "C", group: 2, size: 25, name: "Node C" },
-        { id: "D", group: 2, size: 18, name: "Node D" },
-        { id: "E", group: 3, size: 22, name: "Node E" },
-        { id: "F", group: 3, size: 16, name: "Node F" },
-        { id: "G", group: 1, size: 20, name: "Node G" },
-        { id: "H", group: 2, size: 14, name: "Node H" }
-    ];
-
-    const links = [
-        { source: "A", target: "B", value: 1 },
-        { source: "A", target: "C", value: 2 },
-        { source: "B", target: "D", value: 1 },
-        { source: "C", target: "D", value: 3 },
-        { source: "C", target: "E", value: 2 },
-        { source: "D", target: "F", value: 1 },
-        { source: "E", target: "F", value: 2 },
-        { source: "F", target: "G", value: 1 },
-        { source: "G", target: "H", value: 1 },
-        { source: "A", target: "H", value: 2 }
-    ];
+    const links = nodes.flatMap(node => {
+        return store[node.id].connections.map(connection  => {
+            return { source: node.id, target: connection, value: 1 }
+        })
+    })
 
     // Set dimensions
     const width = 700;
@@ -86,6 +73,7 @@ const app = () => {
                 .duration(500)
                 .style("opacity", 0);
         }).on("click", function(event, d) {
+            Alpine.store('graph').connectToSelected = d.id
             console.log(["clicked", d]);
         });
 
@@ -96,7 +84,7 @@ const app = () => {
         .data(nodes)
         .enter().append("text")
         .attr("class", "node-label")
-        .text(d => d.id)
+        .text(d => `${d.id}`)
         .attr("dy", 4);
 
     // Update positions on each tick
@@ -165,5 +153,39 @@ const app = () => {
 }
 window.addEventListener("load", function() {
     window.app = app;
-    app()
+    app(store)
 })
+
+document.addEventListener('alpine:init', () => {
+    const nodes = Object.keys(store).map(key => {
+        return {name: key};
+    })
+
+    Alpine.store('graph', {
+        nodes: nodes,
+        nodeName: 'graph',
+        connectToSelected: '',
+        addNode (evt) {
+            d3.select("#graph").selectAll("*").remove();
+            if (store[this.nodeName] == null) {
+                store[this.nodeName] = {
+                    description: "",
+                    connections: []
+                }
+                this.nodes = [...new Set([...this.nodes ,...[{name: this.nodeName}]])]
+            }
+
+            if (this.connectToSelected != null && this.connectToSelected !== "") {
+                store[this.nodeName]["connections"].push(this.connectToSelected);
+            }
+            console.log(this.nodes)
+            app(store)
+            this.connectToSelected = ''
+        },
+        selectNode(nodeName) {
+            this.nodeName = nodeName;
+        }
+    })
+})
+window.Alpine = Alpine
+Alpine.start()
