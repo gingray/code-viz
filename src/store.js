@@ -13,7 +13,10 @@ const loadObject = () => {
     }
 
 }
-const store = loadObject()
+let store = loadObject()
+const loadNewStore = (newStore) => {
+    store = newStore
+}
 const updateStore = (store, item) => {
     if (store[item.nodeName] == null) {
         store[item.nodeName] = {
@@ -37,4 +40,4 @@ const createStoreElement = ({line, description, connections, nodeName}) => {
     }
 }
 
-export {store, updateStore, createStoreElement}
+export {store, updateStore, createStoreElement, loadNewStore}

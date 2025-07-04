@@ -30,7 +30,7 @@
             <article>
                 <ul class="list border">
                     <template x-for="nodeName in $store.graph.nodes" >
-                        <li x-text="nodeName" x-on:click="$store.graph.selectNode(node.name)" :class="$store.graph.nodeName == nodeName ? 'secondary-container' : ''"></li>
+                        <li x-text="nodeName" x-on:click="$store.graph.selectNode(nodeName)" :class="$store.graph.nodeName == nodeName ? 'secondary-container' : ''"></li>
                     </template>
                 </ul>
             </article>
@@ -68,9 +68,29 @@
         </div>
 
         <div class="s3">
-            <div class="field border textarea">
-                <label for="jsonRep">JSON:</label>
-                <textarea id="jsonRep" name="jsonRep" x-model="$store.graph.jsonRep"></textarea>
+        </div>
+    </div>
+    <div class="grid json-data">
+        <div class="s3"></div>
+        <div class="s6">
+            <div>
+                <div class="tabs">
+                    <a class="active">JSON</a>
+                    <a>GraphViz</a>
+                </div>
+                <div class="page padding active">
+                    <h5>JSON</h5>
+                    <div>
+                        <button class="responsive" x-on:click="$store.graph.loadFromJson()">Load From JSON</button>
+                    </div>
+                    <div class="field border textarea json-repr large-height">
+                        <label for="jsonRep">JSON:</label>
+                        <textarea id="jsonRep" name="jsonRep" x-model="$store.graph.jsonRep" ></textarea>
+                    </div>
+                </div>
+                <div class="page padding">
+                    <h5>GraphViz</h5>
+                </div>
             </div>
         </div>
     </div>

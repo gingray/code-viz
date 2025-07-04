@@ -2,6 +2,8 @@ import * as d3 from "d3";
 import Alpine from "alpinejs";
 
 const drawGraph = (store) => {
+    d3.select("#graph").selectAll("*").remove();
+
     const nodes = Object.keys(store).map(key => {
         return {id: key, name: key, size: 20 };
     })
