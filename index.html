@@ -20,22 +20,32 @@
 </header>
 <main class="responsive max">
     <div class="grid">
-        <div class="s3">
-            <ul class="list border">
-                <template x-for="node in $store.graph.nodes" :key="node.name">
-                    <li x-text="node.name" x-on:click="$store.graph.selectNode(node.name)"></li>
-                </template>
-            </ul>
-        </div>
+        <div class="s3"></div>
         <div class="s6">
             <div id="graph"></div>
+        </div>
+        </div>
+    <div class="grid">
+        <div class="s3">
+            <article>
+                <ul class="list border">
+                    <template x-for="nodeName in $store.graph.nodes" >
+                        <li x-text="nodeName" x-on:click="$store.graph.selectNode(node.name)" :class="$store.graph.nodeName == nodeName ? 'secondary-container' : ''"></li>
+                    </template>
+                </ul>
+            </article>
+        </div>
+        <div class="s6">
             <form id="nodeEditForm">
-
                 <div class="field label border small">
                     <input type="text" id="nodeId" name="nodeId" x-model="$store.graph.nodeName">
                     <label for="nodeId">Node ID:</label>
                 </div>
 
+                <div class="field border">
+                    <label for="nodeLine">line:</label>
+                    <input type="text" id="nodeLine" name="nodeLine"></input>
+                </div>
 
                 <div class="field textarea border">
                     <label for="nodeName">Description:</label>
@@ -55,6 +65,13 @@
                     <button @click.prevent="$store.graph.addNode()" class="btn-primary">Add Node</button>
                 </div>
             </form>
+        </div>
+
+        <div class="s3">
+            <div class="field border textarea">
+                <label for="jsonRep">JSON:</label>
+                <textarea id="jsonRep" name="jsonRep" x-model="$store.graph.jsonRep"></textarea>
+            </div>
         </div>
     </div>
 </main>
