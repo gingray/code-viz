@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <title>Vite App</title>
+  </head>
+  <body>
+  <header>
+    <nav>
+      <button class="circle transparent">
+        <i>menu</i>
+      </button>
+      <h1 class="max center-align">Code-viz tool</h1>
+      <button class="circle transparent">
+        <img class="responsive" src="/favicon.png">
+      </button>
+    </nav>
+  </header>
+  <article class="border medium no-padding">
+    <main class="responsive">
+      <div id="graph"></div>
+      <form id="nodeEditForm">
+        <div class="field label border small">
+          <input type="text" id="nodeId" name="nodeId" readonly>
+          <label for="nodeId">Node ID:</label>
+        </div>
+        <div class="field textarea border">
+          <label for="nodeName">Description:</label>
+          <textarea id="nodeName" name="nodeName"></textarea>
+        </div>
+        <div class="field border">
+          <label for="nodeNameIn">In Node:</label>
+          <input type="text" id="nodeNameIn" name="nodeNameIn">
+        </div>
+        <div class="field border">
+          <label for="nodeNameOut">Out Node:</label>
+          <input type="text" id="nodeNameOut" name="nodeNameOut">
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit" class="btn-primary">Add Node</button>
+        </div>
+      </form>
+    </main>
+  </article>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
