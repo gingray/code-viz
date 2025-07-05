@@ -1,8 +1,8 @@
-const loadObject = () => {
+const createStore = () => {
     return {
         "MyAppNameReallyLongDefinitionOfCallAndIReallyProudOfItCozILikeLongNames": {
             description: "main method",
-            line: '',
+            line: '123',
             connections: ["call1"]
         },
         "call1": {
@@ -13,10 +13,6 @@ const loadObject = () => {
     }
 
 }
-let store = loadObject()
-const loadNewStore = (newStore) => {
-    store = newStore
-}
 const updateStore = (store, item) => {
     if (store[item.nodeName] == null) {
         store[item.nodeName] = {
@@ -26,6 +22,10 @@ const updateStore = (store, item) => {
         }
         return store
     }
+    if (item.line !== '') {
+        store[item.nodeName].line = item.line
+    }
+
     if (item.connections.length > 0) {
         store[item.nodeName].connections = [...new Set([...store[item.nodeName].connections ,...item.connections])]
     }
@@ -40,4 +40,4 @@ const createStoreElement = ({line, description, connections, nodeName}) => {
     }
 }
 
-export {store, updateStore, createStoreElement, loadNewStore}
+export {createStore, updateStore, createStoreElement}

@@ -21,24 +21,26 @@
 <main class="responsive max">
     <div class="grid">
         <div class="l12">
-            <div id="graph"></div>
+            <div class="center-align" id="graph"></div>
         </div>
         </div>
     <div class="grid">
         <div class="l6">
             <article>
                 <ul class="list border no-space">
-                    <template x-for="nodeName in $store.graph.nodes" >
+                    <template x-for="(value, nodeName) in $store.graph.store" >
                         <li  x-on:click="$store.graph.selectNode(nodeName)" :class="[$store.graph.nodeName == nodeName ? 'secondary-container' : '', $store.graph.connectToSelected == nodeName ? 'tertiary-container' : '']">
                             <i x-show="$store.graph.connectToSelected == nodeName">radio_button_checked</i>
                             <i x-show="$store.graph.nodeName == nodeName">radio_button_checked</i>
                             <i x-show="$store.graph.nodeName !== nodeName && $store.graph.connectToSelected !== nodeName">radio_button_unchecked</i>
                             <div class="max">
                                 <h6 class="small" x-text="$truncate(nodeName, 50)"></h6>
-                                <div x-show="$store.graph.nodeName == nodeName">From</div>
-                                <div x-show="$store.graph.connectToSelected == nodeName">To</div>
+                                <div>
+                                    <code x-text="$store.graph.getNodeValue(nodeName).line">console.log()</code>
+                                </div>
                             </div>
-<!--                            <label>+15 min</label>-->
+                            <label x-show="$store.graph.nodeName == nodeName">From</label>
+                            <label x-show="$store.graph.connectToSelected == nodeName">To</label>
                         </li>
                     </template>
                 </ul>
@@ -53,7 +55,7 @@
 
                 <div class="field border">
                     <label for="nodeLine">line:</label>
-                    <input type="text" id="nodeLine" name="nodeLine"></input>
+                    <input x-model="$store.graph.line" type="text" id="nodeLine" name="nodeLine"/>
                 </div>
 
                 <div class="field textarea border">
