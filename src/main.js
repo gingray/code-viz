@@ -6,6 +6,7 @@ import Toolkit from '@alpine-collective/toolkit'
 import {serializeObject} from "./helpers.js";
 import {drawGraph} from "./graph.js";
 import {generateMermaid} from "./mermaid.js";
+import {createIdeaLinkFromLine} from "./idea.js";
 
 document.addEventListener('alpine:init', () => {
     const store = createStore()
@@ -30,6 +31,7 @@ document.addEventListener('alpine:init', () => {
             this.mermaidJs = generateMermaid(this.store).join("\n")
         },
         selectNode(nodeName) {
+            console.log(createIdeaLinkFromLine(this.store[nodeName].line))
             if (this.nodeName === nodeName) {
                 this.connectToSelected = ""
                 return
