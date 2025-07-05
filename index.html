@@ -57,6 +57,7 @@
                     <label for="nodeLine">line:</label>
                     <input x-model="$store.graph.line" type="text" id="nodeLine" name="nodeLine"/>
                 </div>
+                <div x-html="$store.graph.generateLineLinkIdea()"></div>
 
                 <div class="field textarea border">
                     <label for="nodeName">Description:</label>

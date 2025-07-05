@@ -6,7 +6,7 @@ import Toolkit from '@alpine-collective/toolkit'
 import {serializeObject} from "./helpers.js";
 import {drawGraph} from "./graph.js";
 import {generateMermaid} from "./mermaid.js";
-import {createIdeaLinkFromLine} from "./idea.js";
+import {createHtmlLinkFromLine, createIdeaLinkFromLine} from "./idea.js";
 
 document.addEventListener('alpine:init', () => {
     const store = createStore()
@@ -58,6 +58,15 @@ document.addEventListener('alpine:init', () => {
         },
         getNodeValue(node) {
             return this.store[node]
+        },
+        generateLineLinkIdea() {
+            if (this.nodeName === null || this.nodeName === "" || this.nodeName === undefined) {
+                return ""
+            }
+            if (this.store[this.nodeName] === null || this.store[this.nodeName] === undefined || this.store[this.nodeName].line === null || this.store[this.nodeName].line === '' || this.store[this.nodeName].line === undefined) {
+                return ""
+            }
+            return createHtmlLinkFromLine(this.store[this.nodeName].line)
         }
     })
 })
