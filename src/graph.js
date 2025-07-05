@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import Alpine from "alpinejs";
 
 const drawGraph = (store) => {
     d3.select("#graph").selectAll("*").remove();
@@ -88,7 +87,7 @@ const drawGraph = (store) => {
                 .duration(500)
                 .style("opacity", 0);
         }).on("click", function(event, d) {
-            Alpine.store('graph').connectToSelected = d.id
+            // Alpine.store('graph').connectToSelected = d.id
             console.log(["clicked", d]);
         });
 

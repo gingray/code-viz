@@ -4,7 +4,7 @@ import {createStoreElement, updateStore} from "../src/store.js";
 
 describe('generateMermaid()', () => {
     it('produce string for mermaid.js', () => {
-        const expected = ['stateDiagram-v2', 'XXX#colon;#colon;YYY#call -->xxx1','XXX#colon;#colon;YYY#call -->xxx2']
+        const expected = ['stateDiagram-v2', '  XXX#colon;#colon;YYY#call -->xxx1','  XXX#colon;#colon;YYY#call -->xxx2']
         const store = { }
         const item = createStoreElement({line: 'some line', connections: ["xxx1", "xxx2"], nodeName: "XXX::YYY#call", description: ""})
         updateStore(store, item)

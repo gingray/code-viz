@@ -1,5 +1,3 @@
-// http://localhost:63342/api/file?file=lib/license_rules/estonian/limits/actions/sync_activator.rb&line=17
-
 import {generateHtmlLink} from "./helpers.js";
 
 const createIdeaLinkFromLine = (line) => {
