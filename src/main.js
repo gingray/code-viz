@@ -59,11 +59,25 @@ document.addEventListener('alpine:init', () => {
         getNodeValue(node) {
             return this.store[node]
         },
-        generateLineLinkIdea() {
-            if (this.nodeName === null || this.nodeName === "" || this.nodeName === undefined) {
+        openInIdea(e) {
+            debugger
+            e.stopPropagation()
+            e.preventDefault()
+
+            if (!this.nodeName || this.nodeName === "") {
                 return ""
             }
-            if (this.store[this.nodeName] === null || this.store[this.nodeName] === undefined || this.store[this.nodeName].line === null || this.store[this.nodeName].line === '' || this.store[this.nodeName].line === undefined) {
+            if (!this.store[this.nodeName] || !this.store[this.nodeName].line || this.store[this.nodeName].line === '') {
+                return ""
+            }
+            const url = createIdeaLinkFromLine(this.store[this.nodeName].line)
+            fetch(url).then(response => { console.log(response) }).catch(error => { console.error(error) })
+        },
+        generateLineLinkIdea() {
+            if (!this.nodeName || this.nodeName === "") {
+                return ""
+            }
+            if (!this.store[this.nodeName] || !this.store[this.nodeName].line || this.store[this.nodeName].line === '') {
                 return ""
             }
             return createHtmlLinkFromLine(this.store[this.nodeName].line)

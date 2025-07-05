@@ -2,7 +2,7 @@ const createStore = () => {
     return {
         "MyAppNameReallyLongDefinitionOfCallAndIReallyProudOfItCozILikeLongNames": {
             description: "main method",
-            line: '123',
+            line: 'src/store.js:14',
             connections: ["call1"]
         },
         "call1": {

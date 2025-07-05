@@ -57,7 +57,7 @@
                     <label for="nodeLine">line:</label>
                     <input x-model="$store.graph.line" type="text" id="nodeLine" name="nodeLine"/>
                 </div>
-                <div x-html="$store.graph.generateLineLinkIdea()"></div>
+                <a href="#" x-on:click="$store.graph.openInIdea($event)">Try to open file in IDEA</a>
 
                 <div class="field textarea border">
                     <label for="nodeName">Description:</label>
