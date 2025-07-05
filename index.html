@@ -14,7 +14,7 @@
         </button>
         <h1 class="max center-align">Code-viz tool</h1>
         <button class="circle transparent">
-            <img class="responsive" src="/favicon.png">
+            <img class="responsive" src="/vite.svg"/>
         </button>
     </nav>
 </header>
@@ -57,7 +57,7 @@
                     <label for="nodeLine">line:</label>
                     <input x-model="$store.graph.line" type="text" id="nodeLine" name="nodeLine"/>
                 </div>
-                <a href="#" x-on:click="$store.graph.openInIdea($event)">Try to open file in IDEA</a>
+                <a href="#" x-show="!$checkEmpty($store.graph.store[$store.graph.nodeName].line)" x-on:click="$store.graph.openInIdea($event)">Try to open file in IDEA</a>
 
                 <div class="field textarea border">
                     <label for="nodeName">Description:</label>
@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="field">
-                    <button @click.prevent="$store.graph.addNode()" class="btn-primary">Add Node</button>
+                    <button @click.prevent="$store.graph.upsertNode()" class="btn-primary">Upsert Node</button>
                 </div>
             </form>
         </div>

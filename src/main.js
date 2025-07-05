@@ -3,10 +3,11 @@ import './style.css'
 import {createStore, createStoreElement, updateStore} from "./store";
 import Alpine from 'alpinejs'
 import Toolkit from '@alpine-collective/toolkit'
-import {serializeObject} from "./helpers.js";
+import {checkEmpty, afterStateChanges, serializeObject} from "./helpers.js";
 import {drawGraph} from "./graph.js";
 import {generateMermaid} from "./mermaid.js";
-import {createHtmlLinkFromLine, createIdeaLinkFromLine} from "./idea.js";
+import {createIdeaLinkFromLine} from "./idea.js";
+import {extendAlpine} from "./alpineExt.js";
 
 document.addEventListener('alpine:init', () => {
     const store = createStore()
@@ -20,15 +21,11 @@ document.addEventListener('alpine:init', () => {
         connectToSelected: '',
         mermaidJs: '',
         selectedTab: 'json',
-        addNode (evt) {
+        upsertNode() {
             const connections = this.connectToSelected === '' ? [] : [this.connectToSelected]
             const storeElement = createStoreElement({line: this.line, description: '', nodeName: this.nodeName, connections: connections})
             this.store = updateStore(this.store, storeElement)
-            drawGraph(this.store)
-            this.connectToSelected = ''
-            this.line = ''
-            this.jsonRep = serializeObject(this.store)
-            this.mermaidJs = generateMermaid(this.store).join("\n")
+            afterStateChanges(this)
         },
         selectNode(nodeName) {
             console.log(createIdeaLinkFromLine(this.store[nodeName].line))
@@ -47,6 +44,10 @@ document.addEventListener('alpine:init', () => {
             } else {
                 this.nodeName = nodeName;
             }
+
+            if (!checkEmpty(this.nodeName) && !checkEmpty(this.store[this.nodeName])) {
+                this.line = this.store[this.nodeName].line
+            }
         },
         loadFromJson() {
             this.store = JSON.parse(this.jsonRep);
@@ -60,30 +61,18 @@ document.addEventListener('alpine:init', () => {
             return this.store[node]
         },
         openInIdea(e) {
-            debugger
             e.stopPropagation()
             e.preventDefault()
+            if (checkEmpty(this.nodeName) || checkEmpty(this[store]) || checkEmpty(this[store].line)) {
+                return
+            }
 
-            if (!this.nodeName || this.nodeName === "") {
-                return ""
-            }
-            if (!this.store[this.nodeName] || !this.store[this.nodeName].line || this.store[this.nodeName].line === '') {
-                return ""
-            }
             const url = createIdeaLinkFromLine(this.store[this.nodeName].line)
             fetch(url).then(response => { console.log(response) }).catch(error => { console.error(error) })
-        },
-        generateLineLinkIdea() {
-            if (!this.nodeName || this.nodeName === "") {
-                return ""
-            }
-            if (!this.store[this.nodeName] || !this.store[this.nodeName].line || this.store[this.nodeName].line === '') {
-                return ""
-            }
-            return createHtmlLinkFromLine(this.store[this.nodeName].line)
         }
     })
 })
 window.Alpine = Alpine
 Alpine.plugin(Toolkit)
+extendAlpine(Alpine)
 Alpine.start()
