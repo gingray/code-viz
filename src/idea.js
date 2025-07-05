@@ -4,7 +4,7 @@ const createIdeaLinkFromLine = (line) => {
     if (line === null || line === undefined || line === "") { return "" }
 
     const [path, pos] = line.split(":");
-    return `http://localhost:63342/file?file=${path}&line=${pos}`;
+    return `http://localhost:63342/api/file?file=${path}&line=${pos}`;
 }
 
 export {createIdeaLinkFromLine};
