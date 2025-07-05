@@ -15,8 +15,8 @@ const drawGraph = (store) => {
     })
 
     // Set dimensions
-    const width = 700;
-    const height = 500;
+    const width = 1000;
+    const height = 560;
 
     // Create color scale for groups
     const color = d3.scaleOrdinal(d3.schemeCategory10);

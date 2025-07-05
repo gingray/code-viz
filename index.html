@@ -20,13 +20,12 @@
 </header>
 <main class="responsive max">
     <div class="grid">
-        <div class="s3"></div>
-        <div class="s6">
+        <div class="l12">
             <div id="graph"></div>
         </div>
         </div>
     <div class="grid">
-        <div class="s3">
+        <div class="l6">
             <article>
                 <ul class="list border no-space">
                     <template x-for="nodeName in $store.graph.nodes" >
@@ -45,7 +44,7 @@
                 </ul>
             </article>
         </div>
-        <div class="s6">
+        <div class="l6">
             <form id="nodeEditForm">
                 <div class="field label border small">
                     <input type="text" id="nodeId" name="nodeId" x-model="$store.graph.nodeName">
@@ -76,13 +75,10 @@
                 </div>
             </form>
         </div>
-
-        <div class="s3">
-        </div>
     </div>
     <div class="grid json-data">
-        <div class="s3"></div>
-        <div class="s6">
+        <div class="l2"></div>
+        <div class="l8">
             <div>
                 <div class="tabs">
                     <a :class="$store.graph.selectedTab == 'json' ? 'active': ''" x-on:click="$store.graph.selectTab('json')">JSON</a>
