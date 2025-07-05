@@ -28,11 +28,18 @@
     <div class="grid">
         <div class="s3">
             <article>
-                <ul class="list border">
+                <ul class="list border no-space">
                     <template x-for="nodeName in $store.graph.nodes" >
                         <li  x-on:click="$store.graph.selectNode(nodeName)" :class="[$store.graph.nodeName == nodeName ? 'secondary-container' : '', $store.graph.connectToSelected == nodeName ? 'tertiary-container' : '']">
-                            <span x-text="nodeName" ></span>
-                            <span>From</span>
+                            <i x-show="$store.graph.connectToSelected == nodeName">radio_button_checked</i>
+                            <i x-show="$store.graph.nodeName == nodeName">radio_button_checked</i>
+                            <i x-show="$store.graph.nodeName !== nodeName && $store.graph.connectToSelected !== nodeName">radio_button_unchecked</i>
+                            <div class="max">
+                                <h6 class="small" x-text="$truncate(nodeName, 50)"></h6>
+                                <div x-show="$store.graph.nodeName == nodeName">From</div>
+                                <div x-show="$store.graph.connectToSelected == nodeName">To</div>
+                            </div>
+<!--                            <label>+15 min</label>-->
                         </li>
                     </template>
                 </ul>
@@ -78,10 +85,10 @@
         <div class="s6">
             <div>
                 <div class="tabs">
-                    <a class="active">JSON</a>
-                    <a>GraphViz</a>
+                    <a :class="$store.graph.selectedTab == 'json' ? 'active': ''" x-on:click="$store.graph.selectTab('json')">JSON</a>
+                    <a :class="$store.graph.selectedTab == 'mermaid' ? 'active': ''" x-on:click="$store.graph.selectTab('mermaid')">MermaidJS</a>
                 </div>
-                <div class="page padding active">
+                <div :class="$store.graph.selectedTab == 'json' ? 'active': ''" class="page padding">
                     <h5>JSON</h5>
                     <div>
                         <button class="responsive" x-on:click="$store.graph.loadFromJson()">Load From JSON</button>
@@ -91,8 +98,9 @@
                         <textarea id="jsonRep" name="jsonRep" x-model="$store.graph.jsonRep" ></textarea>
                     </div>
                 </div>
-                <div class="page padding">
-                    <h5>GraphViz</h5>
+                <div :class="$store.graph.selectedTab == 'mermaid' ? 'active': ''" class="page padding">
+                    <h5>MermaidJs</h5>
+                    <pre x-text="$store.graph.mermaidJs"></pre>
                 </div>
             </div>
         </div>

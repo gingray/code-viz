@@ -16,6 +16,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "@alpine-collective/toolkit": "^1.0.2",
     "alpinejs": "^3.14.9",
     "beercss": "^3.11.30",
     "d3": "^7.9.0",

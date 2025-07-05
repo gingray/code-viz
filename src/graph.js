@@ -39,13 +39,29 @@ const drawGraph = (store) => {
         .force("center", d3.forceCenter(width / 2, height / 2))
         .force("collision", d3.forceCollide().radius(d => d.size + 5));
 
+
+    svg.append("svg:defs").append("svg:marker")
+        .attr("id", "triangle")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 27) // Position where arrow connects to the line
+        .attr("refY", 0)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "black");
+
     // Create links
     const link = svg.append("g")
         .attr("class", "links")
         .selectAll("line")
         .data(links)
         .enter().append("line")
-        .attr("stroke-width", d => Math.sqrt(d.value) * 2);
+        .attr("stroke", "black")
+        .attr("stroke-width", 2)
+        // .attr("stroke-width", d => Math.sqrt(d.value) * 2)
+        .attr("marker-end", "url(#triangle)");
 
     // Create nodes
     const node = svg.append("g")
@@ -137,18 +153,6 @@ const drawGraph = (store) => {
         simulation.alpha(0.3).restart();
     }
 
-    // Add some visual enhancements
-    svg.append("defs").append("marker")
-        .attr("id", "arrowhead")
-        .attr("viewBox", "0 -5 10 10")
-        .attr("refX", 8)
-        .attr("refY", 0)
-        .attr("orient", "auto")
-        .attr("markerWidth", 4)
-        .attr("markerHeight", 4)
-        .append("path")
-        .attr("d", "M0,-5L10,0L0,5")
-        .attr("fill", "#999");
 }
 
 export {drawGraph}
