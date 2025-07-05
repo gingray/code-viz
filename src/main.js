@@ -27,11 +27,26 @@ document.addEventListener('alpine:init', () => {
             this.jsonRep = serializeObject(store)
         },
         selectNode(nodeName) {
-            this.nodeName = nodeName;
+            if (this.nodeName === nodeName) {
+                this.connectToSelected = ""
+                return
+            }
+
+            if (this.nodeName !== "" && this.connectToSelected !=="") {
+                this.nodeName = ""
+                this.connectToSelected = ""
+            }
+
+            if (this.nodeName !== "") {
+                this.connectToSelected = nodeName
+            } else {
+                this.nodeName = nodeName;
+            }
         },
         loadFromJson() {
             const newStore = JSON.parse(this.jsonRep);
             loadNewStore(newStore);
+            this.nodes = Object.keys(newStore)
             drawGraph(store);
         }
     })

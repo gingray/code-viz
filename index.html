@@ -30,7 +30,10 @@
             <article>
                 <ul class="list border">
                     <template x-for="nodeName in $store.graph.nodes" >
-                        <li x-text="nodeName" x-on:click="$store.graph.selectNode(nodeName)" :class="$store.graph.nodeName == nodeName ? 'secondary-container' : ''"></li>
+                        <li  x-on:click="$store.graph.selectNode(nodeName)" :class="[$store.graph.nodeName == nodeName ? 'secondary-container' : '', $store.graph.connectToSelected == nodeName ? 'tertiary-container' : '']">
+                            <span x-text="nodeName" ></span>
+                            <span>From</span>
+                        </li>
                     </template>
                 </ul>
             </article>
