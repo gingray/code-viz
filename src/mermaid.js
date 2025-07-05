@@ -14,7 +14,7 @@ const generateMermaid = (store) => {
     let tokens = ['stateDiagram-v2']
     Object.keys(store).forEach((key) => {
         store[key].connections.forEach(connection => {
-            tokens.push(`${escapeNodeName(key)} -->${escapeNodeName(connection)}`)
+            tokens.push(`  ${escapeNodeName(key)} -->${escapeNodeName(connection)}`)
         })
     })
 
